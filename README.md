@@ -49,6 +49,7 @@ The project follows a **Multi-Layered Architecture** to ensure separation of con
 - **Visual Analytics Engine:** Integrated **Recharts** for real-time sales performance tracking, featuring interactive line charts and area graphs with automated data hydration.
 - **Dynamic SEO Engine:** Automated XML Sitemap generation and `robots.txt` configuration for real-time search engine indexing and crawling.
 - **Professional Admin Suite:** High-speed server-side filtering and optimistic CRUD operations for a "no-wait" administrative experience.
+- **Intelligent Shopping Assistant:** A real-time AI companion powered by Google Gemini to help customers discover products and answer queries
 
 ### 🎨 Premium Storefront UX
 - **Dynamic Pricing Badges:** Real-time discount calculation with high-impact visual "floating stickers."
