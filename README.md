@@ -80,16 +80,17 @@ src/
 
 ```mermaid
 graph TD
-    A[Client Component] -->|Calls Hook| B(useMutation / useQuery)
-    B -->|Triggers| C[Server Action]
-    C -->|Validates| D[Zod Schema]
-    D -->|Executes| E[Service Layer]
-    E -->|Reads/Writes| F[(PostgreSQL)]
-    F -->|Returns Data| E
-    E -->|Revalidates Path| C
-    C -->|Success Toast| A
-    C -->|Invalidates Cache| B
-
+    A[Client Component] -->|1. Triggers| B(useMutation / useQuery)
+    B -->|2. Calls| C[Server Action]
+    C -->|3. Validates| D[Zod Schema]
+    D -->|4. Invokes| E[Service Layer]
+    E -->|5. Logic & Serialization| F[Repository Layer]
+    F -->|6. SQL Query| G[(PostgreSQL / Prisma)]
+    G -->|7. Raw Data| F
+    F -->|8. Clean Data| E
+    E -->|9. Plain Objects| C
+    C -->|10. Invalidate / Revalidate| B
+    C -->|11. Success UI| A
 ```
 
 ---
