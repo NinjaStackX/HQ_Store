@@ -59,6 +59,7 @@ The project follows a **Multi-Layered Architecture** to ensure separation of con
 ---
 
 ## 📁 Project Structure
+```
 src/
 ├── app/              # Next.js App Router (Pages & Layouts)
 ├── components/       # UI Components (Atomic Design: ui, layout, common)
@@ -73,7 +74,7 @@ src/
 ├── types/            # Global TypeScript Definitions
 ├── constants/        # Global Configs (promo-tags, navigation)
 └── validation/       # Zod Schemas / Validation Logic
-
+```
 ---
 
 ## 🔄 Data Synchronization Flow
