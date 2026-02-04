@@ -59,19 +59,20 @@ The project follows a **Multi-Layered Architecture** to ensure separation of con
 ---
 
 ## 📁 Project Structure
-
-```bash
-├── actions/        # Server Actions (Strongly typed entry points)
-├── app/            # Next.js App Router (Routes, Layouts & Metadata)
-├── services/       # Core Business Logic & Database Queries (Services)
-├── hooks/          # Custom React Hooks (useCart, useUser, useOrders)
-├── components/     # UI/UX Library (Atomic Design Architecture)
-├── providers/      # Context & QueryClient Injection
-├── lib/            # Utilities (Prisma Client, Formatting, Auth Config)
-├── validation/     # Zod Schemas for Client/Server synchronization
-└── types/          # Global TypeScript interfaces & Enums
-
-```
+src/
+├── app/              # Next.js App Router (Pages & Layouts)
+├── components/       # UI Components (Atomic Design: ui, layout, common)
+├── features/         #  (products, cart, auth)
+├── hooks/            # Custom React Hooks
+├── server/           # 
+│   ├── actions/      # Server Actions
+│   ├── services/     # Business Logic & Serialization
+│   └── repositories/ # Database Access (Prisma)
+├── lib/              # Shared Utilities (prisma client, utils, fetchers)
+├── store/            # State Management (Zustand/Redux)
+├── types/            # Global TypeScript Definitions
+├── constants/        # Global Configs (promo-tags, navigation)
+└── validation/       # Zod Schemas / Validation Logic
 
 ---
 
@@ -110,6 +111,7 @@ pnpm install
 DATABASE_URL="your_postgresql_url"
 AUTH_SECRET="your_nextauth_secret"
 AUTH_TRUST_HOST=true
+AI_API_KEY="like openAI"
 
 ```
 
