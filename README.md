@@ -81,17 +81,30 @@ src/
 
 ```mermaid
 graph TD
-    A[Client Component] -->|1. Triggers| B(useMutation / useQuery)
-    B -->|2. Calls| C[Server Action]
-    C -->|3. Validates| D[Zod Schema]
-    D -->|4. Invokes| E[Service Layer]
-    E -->|5. Logic & Serialization| F[Repository Layer]
-    F -->|6. SQL Query| G[(PostgreSQL / Prisma)]
-    G -->|7. Raw Data| F
-    F -->|8. Clean Data| E
-    E -->|9. Plain Objects| C
-    C -->|10. Invalidate / Revalidate| B
-    C -->|11. Success UI| A
+    A[Client Component] -->|1. useMutation / useQuery| B{{TanStack Query}}
+    
+    subgraph "Frontend State Management"
+        B -->|2. Triggers| C[Server Action]
+        B -.->|8. Optimistic Update / Cache| A
+    end
+
+    subgraph "Server Logic Layer (Node.js)"
+        C -->|3. Validation / Auth| D[Zod Schema]
+        D -->|4. Business Logic| E[Primary Service]
+        E <-->|Inter-service| G[Secondary Service]
+    end
+
+    subgraph "Data Access Layer"
+        E -->|5. Data Ops| H[Repository]
+        G -->|5. Data Ops| H
+        H <-->|6. Query| F[(PostgreSQL / Prisma)]
+    end
+
+    F -->|Data| H
+    H -->|Entity| E
+    E -->|Success/Error| C
+    C -->|7. Return Result| B
+    B -->|9. Invalidate Tags| A
 ```
 
 ---
