@@ -80,31 +80,38 @@ src/
 ## 🔄 Data Synchronization Flow
 
 ```mermaid
+
 graph TD
-    A[Client Component] -->|1. useMutation / useQuery| B{{TanStack Query}}
+    A[Client Component] -->|1. Invokes| CH[Custom Hooks Layer]
     
-    subgraph "Frontend State Management"
-        B -->|2. Triggers| C[Server Action]
-        B -.->|8. Optimistic Update / Cache| A
+    subgraph "Frontend Engine"
+        CH -->|2. useMutation / useQuery| B{{TanStack Query}}
+        B -->|3. Triggers| SA[SafeAction Wrapper]
+        B -.->|10. Optimistic UI| A
     end
 
-    subgraph "Server Logic Layer (Node.js)"
-        C -->|3. Validation / Auth| D[Zod Schema]
-        D -->|4. Business Logic| E[Primary Service]
+    subgraph "Server Action Layer"
+        SA -->|4. Internal Logic| C[Server Action]
+        C -->|5. Validation / Auth| D[Zod Schema]
+    end
+
+    subgraph "Enterprise Logic"
+        D -->|6. Business Logic| E[Primary Service]
         E <-->|Inter-service| G[Secondary Service]
     end
 
-    subgraph "Data Access Layer"
-        E -->|5. Data Ops| H[Repository]
-        G -->|5. Data Ops| H
-        H <-->|6. Query| F[(PostgreSQL / Prisma)]
+    subgraph "Data Persistence"
+        E -->|7. Data Ops| H[Repository]
+        G -->|7. Data Ops| H
+        H <-->|8. Query| F[(PostgreSQL / Prisma)]
     end
 
-    F -->|Data| H
-    H -->|Entity| E
+    F -->|Raw Data| H
+    H -->|Entity/Model| E
     E -->|Success/Error| C
-    C -->|7. Return Result| B
-    B -->|9. Invalidate Tags| A
+    C -->|9. Result| B
+    B -->|11. Cache Invalidation| CH
+    CH -->|Data/State| A
 ```
 
 ---
